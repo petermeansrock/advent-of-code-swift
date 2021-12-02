@@ -26,11 +26,11 @@ jobs:
       id: coverage-files
       with:
         format: lcov
-        ignore-conversion-failures: true
-        fail-on-empty-output: false
+        ignore-conversion-failures: false
+        fail-on-empty-output: true
     - name: Codecov
       uses: codecov/codecov-action@v2.1.0
       with:
         files: ${{join(fromJSON(steps.coverage-files.outputs.files), ',')}}
-        fail_ci_if_error: false
+        fail_ci_if_error: true
         verbose: true
