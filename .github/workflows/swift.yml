@@ -21,3 +21,9 @@ jobs:
       run: swift build -v
     - name: Run tests
       run: swift test -v --enable-code-coverage
+    - name: Codecov
+      uses: codecov/codecov-action@v2.1.0
+      with:
+        files: .build/debug/codecov/Library.json
+        fail_ci_if_error: false
+        verbose: true
