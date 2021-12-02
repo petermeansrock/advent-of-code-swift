@@ -31,6 +31,6 @@ jobs:
     - name: Codecov
       uses: codecov/codecov-action@v2.1.0
       with:
-        files: files: ${{join(fromJSON(steps.coverage-files.outputs.files), ',')}}
+        files: ${{join(fromJSON(steps.coverage-files.outputs.files), ',')}}
         fail_ci_if_error: false
         verbose: true
