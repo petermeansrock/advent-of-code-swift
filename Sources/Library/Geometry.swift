@@ -59,21 +59,11 @@ public struct Coordinate: Equatable {
     /// Returns a list of coordinates between the two provided coordinates, inclusive.
     /// - Returns: A list of coordinates between the two provided coordinates, inclusive.
     public static func ... (lhs: Coordinate, rhs: Coordinate) throws -> [Coordinate] {
-        let orientation = try lhs.relativeOrientation(to: rhs)
+        let xDifference = rhs.x - lhs.x
+        let yDifference = rhs.y - lhs.y
         
-        var dx: Int
-        var dy: Int
-        switch (orientation) {
-        case .horizontal:
-            dx = lhs.x < rhs.x ? 1 : -1
-            dy = 0
-        case .vertical:
-            dx = 0
-            dy = lhs.y < rhs.y ? 1 : -1
-        case .diagonal:
-            dx = lhs.x < rhs.x ? 1 : -1
-            dy = lhs.y < rhs.y ? 1 : -1
-        }
+        let dx = xDifference / max(abs(xDifference), 1)
+        let dy = yDifference / max(abs(yDifference), 1)
         
         var coordinates = [Coordinate]()
         var current = lhs
