@@ -106,6 +106,8 @@ public struct LineSegment {
     public let end: Coordinate
     /// The orientation between the start and end coordinates.
     public let orientation: Orientation
+    /// The coordinates between the start and end coordinate, inclusive.
+    public let coordinates: [Coordinate]
     
     /// Format of supported string representations, as in the example `0,9 -> 5,9`.
     private static let stringRegex = try! NSRegularExpression(
@@ -125,6 +127,7 @@ public struct LineSegment {
         self.start = start
         self.end = end
         self.orientation = try start.relativeOrientation(to: end)
+        self.coordinates = try! start...end // Can't fail because orientation is valid
     }
     
     /// Creates a new instance.
@@ -204,7 +207,7 @@ public struct Plot {
     ///
     /// - Parameter line: The line segment to plot.
     public mutating func plot(line: LineSegment) {
-        for coordinate in try! line.start...line.end {
+        for coordinate in line.coordinates {
             self.grid[coordinate.y][coordinate.x] += 1
         }
     }
