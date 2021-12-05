@@ -77,6 +77,11 @@ public struct LineSegment {
     /// The orientation between the start and end coordinates.
     public let orientation: Orientation
     
+    /// Format of supported string representations, as in the example `0,9 -> 5,9`.
+    private static let stringRegex = try! NSRegularExpression(
+        pattern: #"^(\d+),(\d+) -> (\d+),(\d+)$"#
+    )
+    
     /// Creates a new instance.
     ///
     /// The orientation between the start and end coordinates is determined via
@@ -90,6 +95,33 @@ public struct LineSegment {
         self.start = start
         self.end = end
         self.orientation = try start.relativeOrientation(to: end)
+    }
+    
+    /// Creates a new instance.
+    ///
+    /// - Parameter string: A string in the format demonstrated in the example `0,9 -> 5,9`.
+    public init(in string: String) throws {
+        guard let match = LineSegment.stringRegex
+                .firstMatch(in: string, range: NSRange(string.startIndex..., in: string)) else {
+            throw ValidationError.stringDoesNotMatchSupportedFormat
+        }
+        
+        let start = Coordinate(
+            x: Int(string[Range(match.range(at: 1), in: string)!])!,
+            y: Int(string[Range(match.range(at: 2), in: string)!])!
+        )
+        let end = Coordinate(
+            x: Int(string[Range(match.range(at: 3), in: string)!])!,
+            y: Int(string[Range(match.range(at: 4), in: string)!])!
+        )
+        
+        try self.init(from: start, to: end)
+    }
+    
+    /// Represents the errors that can be thrown while validating a line segment.
+    public enum ValidationError: Error {
+        /// A line segment string must match the format demonstrated in the example `0,9 -> 5,9`.
+        case stringDoesNotMatchSupportedFormat
     }
 }
 

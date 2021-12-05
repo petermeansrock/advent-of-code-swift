@@ -72,7 +72,7 @@ class CoordinateTests: XCTestCase {
 }
 
 class LineSegmentTests: XCTestCase {
-    func testInitDeterminationOfOrientation() throws {
+    func testInitWithCoordinatesDeterminationOfOrientation() throws {
         // Arrange
         let start = Coordinate(x: 0, y: 0)
         let end = Coordinate(x: 5, y: 0)
@@ -84,7 +84,7 @@ class LineSegmentTests: XCTestCase {
         XCTAssertEqual(segment.orientation, .horizontal)
     }
     
-    func testInitPropagatesOrientationError() throws {
+    func testInitWithCoordinatesPropagatesOrientationError() throws {
         // Arrange
         let start = Coordinate(x: 0, y: 0)
         let end = Coordinate(x: 1, y: 2)
@@ -98,5 +98,31 @@ class LineSegmentTests: XCTestCase {
             thrownError = $0
         }
         XCTAssertEqual(thrownError as! Coordinate.RelativeOrientationError, .pointsAreNotPerfectlyAligned)
+    }
+    
+    func testInitWithValidStringFormat() throws {
+        // Arrange
+        let string = "0,9 -> 5,9"
+        
+        // Act
+        let segment = try! LineSegment(in: string)
+        
+        // Assert
+        XCTAssertEqual(segment.orientation, .horizontal)
+    }
+    
+    func testInitWithInvalidStringFormat() throws {
+        // Arrange
+        let string = "0,9 to 5,9"
+        
+        // Act
+        let initClosure = { try LineSegment(in: string) }
+        
+        // Assert
+        var thrownError: Error?
+        XCTAssertThrowsError(try initClosure()) {
+            thrownError = $0
+        }
+        XCTAssertEqual(thrownError as! LineSegment.ValidationError, .stringDoesNotMatchSupportedFormat)
     }
 }
