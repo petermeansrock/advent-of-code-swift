@@ -155,4 +155,57 @@ public struct LineSegment {
     }
 }
 
-
+/// Represents a graphed set of line segments accounting for overlapping segments.
+///
+/// Consider the following set of line segments (processable by
+/// `LineSegment`.``LineSegment/init(in:)``):
+///
+/// ```
+/// 0,9 -> 5,9
+/// 8,0 -> 0,8
+/// 9,4 -> 3,4
+/// 2,2 -> 2,1
+/// 7,0 -> 7,4
+/// 6,4 -> 2,0
+/// 0,9 -> 2,9
+/// 3,4 -> 1,4
+/// 0,0 -> 8,8
+/// 5,5 -> 8,2
+/// ```
+///
+/// The above segments will be logically plotted as follows. Each number represents the number of
+/// line segments which overlap at each ``Coordinate``.
+///
+/// ```
+/// .......1..
+/// ..1....1..
+/// ..1....1..
+/// .......1..
+/// .112111211
+/// ..........
+/// ..........
+/// ..........
+/// ..........
+/// 222111....
+/// ```
+public struct Plot {
+    public private(set) var grid: [[Int]]
+    
+    /// Creates a new instance.
+    /// 
+    /// - Parameters:
+    ///   - maxX: maximum supported x-coordinate
+    ///   - maxY: maximum supported y-coordinate
+    public init(maxX: Int, maxY: Int) {
+        self.grid = Array(repeating: Array(repeating: 0, count: maxX + 1), count: maxY + 1)
+    }
+    
+    /// Plots the provided line segment.
+    ///
+    /// - Parameter line: The line segment to plot.
+    public mutating func plot(line: LineSegment) {
+        for coordinate in try! line.start...line.end {
+            self.grid[coordinate.y][coordinate.x] += 1
+        }
+    }
+}

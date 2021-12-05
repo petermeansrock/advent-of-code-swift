@@ -216,3 +216,54 @@ class LineSegmentTests: XCTestCase {
         XCTAssertEqual(thrownError as! LineSegment.ValidationError, .stringDoesNotMatchSupportedFormat)
     }
 }
+
+class PlotTests: XCTestCase {
+    func testPlotWithSampleInputIgnoringDiagonals() throws {
+        // Arrange
+        let lines = [
+            "0,9 -> 5,9",
+            "8,0 -> 0,8",
+            "9,4 -> 3,4",
+            "2,2 -> 2,1",
+            "7,0 -> 7,4",
+            "6,4 -> 2,0",
+            "0,9 -> 2,9",
+            "3,4 -> 1,4",
+            "0,0 -> 8,8",
+            "5,5 -> 8,2",
+        ]
+        let segments = lines.map{ try! LineSegment(in: $0) }.filter{ $0.orientation != .diagonal }
+        let coordinates = segments.flatMap{ [$0.start, $0.end] }
+        let maxX = coordinates.map{ $0.x }.max()!
+        let maxY = coordinates.map{ $0.y }.max()!
+        
+        // Act
+        var plot = Plot(maxX: maxX, maxY: maxY)
+        for segment in segments {
+            plot.plot(line: segment)
+        }
+        
+        // Assert
+        let overlappingCount = plot.grid.flatMap{ $0 }.filter{ $0 >= 2 }.count
+        XCTAssertEqual(overlappingCount, 5)
+    }
+    
+    func testPlotWithDay5InputIgnoringDiagonals() throws {
+        // Arrange
+        let lines = InputFile(day: 5).loadLines().filter{ $0.count > 0 }
+        let segments = lines.map{ try! LineSegment(in: $0) }.filter{ $0.orientation != .diagonal }
+        let coordinates = segments.flatMap{ [$0.start, $0.end] }
+        let maxX = coordinates.map{ $0.x }.max()!
+        let maxY = coordinates.map{ $0.y }.max()!
+        
+        // Act
+        var plot = Plot(maxX: maxX, maxY: maxY)
+        for segment in segments {
+            plot.plot(line: segment)
+        }
+        
+        // Assert
+        let overlappingCount = plot.grid.flatMap{ $0 }.filter{ $0 >= 2 }.count
+        XCTAssertEqual(overlappingCount, 7269)
+    }
+}
