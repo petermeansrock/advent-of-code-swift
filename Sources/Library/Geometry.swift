@@ -56,6 +56,36 @@ public struct Coordinate: Equatable {
         lhs.y == rhs.y
     }
     
+    /// Returns a list of coordinates between the two provided coordinates, inclusive.
+    /// - Returns: A list of coordinates between the two provided coordinates, inclusive.
+    public static func ... (lhs: Coordinate, rhs: Coordinate) throws -> [Coordinate] {
+        let orientation = try lhs.relativeOrientation(to: rhs)
+        
+        var dx: Int
+        var dy: Int
+        switch (orientation) {
+        case .horizontal:
+            dx = lhs.x < rhs.x ? 1 : -1
+            dy = 0
+        case .vertical:
+            dx = 0
+            dy = lhs.y < rhs.y ? 1 : -1
+        case .diagonal:
+            dx = lhs.x < rhs.x ? 1 : -1
+            dy = lhs.y < rhs.y ? 1 : -1
+        }
+        
+        var coordinates = [Coordinate]()
+        var current = lhs
+        while (current != rhs) {
+            coordinates.append(current)
+            current = Coordinate(x: current.x + dx, y: current.y + dy)
+        }
+        coordinates.append(rhs)
+        
+        return coordinates
+    }
+    
     /// Represents the errors that may be thrown when determining relative orientation.
     public enum RelativeOrientationError: Error {
         /// A relative orientation cannot be determined between two identical points.

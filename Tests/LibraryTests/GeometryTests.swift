@@ -69,6 +69,96 @@ class CoordinateTests: XCTestCase {
         }
         XCTAssertEqual(thrownError as! Coordinate.RelativeOrientationError, .pointsAreNotPerfectlyAligned)
     }
+    
+    func testHorizontalIncreasingClosedRange() throws {
+        // Arrange
+        let start = Coordinate(x: 0, y: 0)
+        let end = Coordinate(x: 2, y: 0)
+        
+        // Act
+        let coordinates = try start...end
+        
+        // Assert
+        XCTAssertEqual(coordinates.count, 3)
+        XCTAssertEqual(coordinates[0], Coordinate(x: 0, y: 0))
+        XCTAssertEqual(coordinates[1], Coordinate(x: 1, y: 0))
+        XCTAssertEqual(coordinates[2], Coordinate(x: 2, y: 0))
+    }
+    
+    func testHorizontalDecreasingClosedRange() throws {
+        // Arrange
+        let start = Coordinate(x: 2, y: 0)
+        let end = Coordinate(x: 0, y: 0)
+        
+        // Act
+        let coordinates = try start...end
+        
+        // Assert
+        XCTAssertEqual(coordinates.count, 3)
+        XCTAssertEqual(coordinates[0], Coordinate(x: 2, y: 0))
+        XCTAssertEqual(coordinates[1], Coordinate(x: 1, y: 0))
+        XCTAssertEqual(coordinates[2], Coordinate(x: 0, y: 0))
+    }
+    
+    func testVerticalIncreasingClosedRange() throws {
+        // Arrange
+        let start = Coordinate(x: 0, y: 0)
+        let end = Coordinate(x: 0, y: 2)
+        
+        // Act
+        let coordinates = try start...end
+        
+        // Assert
+        XCTAssertEqual(coordinates.count, 3)
+        XCTAssertEqual(coordinates[0], Coordinate(x: 0, y: 0))
+        XCTAssertEqual(coordinates[1], Coordinate(x: 0, y: 1))
+        XCTAssertEqual(coordinates[2], Coordinate(x: 0, y: 2))
+    }
+    
+    func testVerticalDecreasingClosedRange() throws {
+        // Arrange
+        let start = Coordinate(x: 0, y: 2)
+        let end = Coordinate(x: 0, y: 0)
+        
+        // Act
+        let coordinates = try start...end
+        
+        // Assert
+        XCTAssertEqual(coordinates.count, 3)
+        XCTAssertEqual(coordinates[0], Coordinate(x: 0, y: 2))
+        XCTAssertEqual(coordinates[1], Coordinate(x: 0, y: 1))
+        XCTAssertEqual(coordinates[2], Coordinate(x: 0, y: 0))
+    }
+    
+    func testDiagonalIncreasingXIncreasingYClosedRange() throws {
+        // Arrange
+        let start = Coordinate(x: 0, y: 0)
+        let end = Coordinate(x: 2, y: 2)
+        
+        // Act
+        let coordinates = try start...end
+        
+        // Assert
+        XCTAssertEqual(coordinates.count, 3)
+        XCTAssertEqual(coordinates[0], Coordinate(x: 0, y: 0))
+        XCTAssertEqual(coordinates[1], Coordinate(x: 1, y: 1))
+        XCTAssertEqual(coordinates[2], Coordinate(x: 2, y: 2))
+    }
+    
+    func testDiagonalDecreasingXDecreasingYClosedRange() throws {
+        // Arrange
+        let start = Coordinate(x: 2, y: 2)
+        let end = Coordinate(x: 0, y: 0)
+        
+        // Act
+        let coordinates = try start...end
+        
+        // Assert
+        XCTAssertEqual(coordinates.count, 3)
+        XCTAssertEqual(coordinates[0], Coordinate(x: 2, y: 2))
+        XCTAssertEqual(coordinates[1], Coordinate(x: 1, y: 1))
+        XCTAssertEqual(coordinates[2], Coordinate(x: 0, y: 0))
+    }
 }
 
 class LineSegmentTests: XCTestCase {
