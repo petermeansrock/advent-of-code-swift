@@ -13,7 +13,7 @@ public struct Coordinate: Equatable {
     public let x: Int
     /// The y-axis value.
     public let y: Int
-    
+
     /// Creates a new instance.
     ///
     /// - Parameters:
@@ -23,7 +23,7 @@ public struct Coordinate: Equatable {
         self.x = x
         self.y = y
     }
-    
+
     /// Determines the relative ``Orientation`` between two coordinates.
     ///
     /// For example:
@@ -47,30 +47,29 @@ public struct Coordinate: Equatable {
             throw RelativeOrientationError.pointsAreNotPerfectlyAligned
         }
     }
-    
+
     /// Determines whether two points are equal based on comparison of their x and y values.
     ///
     /// - Returns: Returns true if the coordinates are equal, false otherwise.
     public static func == (lhs: Coordinate, rhs: Coordinate) -> Bool {
-        return lhs.x == rhs.x &&
-        lhs.y == rhs.y
+        return lhs.x == rhs.x && lhs.y == rhs.y
     }
-    
+
     /// Returns a list of coordinates between the two provided coordinates, inclusive.
     /// - Returns: A list of coordinates between the two provided coordinates, inclusive.
     public static func ... (lhs: Coordinate, rhs: Coordinate) throws -> [Coordinate] {
         let xDifference = rhs.x - lhs.x
         let yDifference = rhs.y - lhs.y
-        
+
         let dx = xDifference / max(abs(xDifference), 1)
         let dy = yDifference / max(abs(yDifference), 1)
-        
+
         let xValues = strideToleratingZero(from: lhs.x, through: rhs.x, by: dx)
         let yValues = strideToleratingZero(from: lhs.y, through: rhs.y, by: dy)
-        
+
         return zip(xValues, yValues).map(Coordinate.init)
     }
-    
+
     /// Represents the errors that may be thrown when determining relative orientation.
     public enum RelativeOrientationError: Error {
         /// A relative orientation cannot be determined between two identical points.
@@ -93,12 +92,12 @@ public struct LineSegment {
     public let orientation: Orientation
     /// The coordinates between the start and end coordinate, inclusive.
     public let coordinates: [Coordinate]
-    
+
     /// Format of supported string representations, as in the example `0,9 -> 5,9`.
     private static let stringRegex = try! NSRegularExpression(
         pattern: #"^(\d+),(\d+) -> (\d+),(\d+)$"#
     )
-    
+
     /// Creates a new instance.
     ///
     /// The orientation between the start and end coordinates is determined via
@@ -112,18 +111,20 @@ public struct LineSegment {
         self.start = start
         self.end = end
         self.orientation = try start.relativeOrientation(to: end)
-        self.coordinates = try! start...end // Can't fail because orientation is valid
+        self.coordinates = try! start...end  // Can't fail because orientation is valid
     }
-    
+
     /// Creates a new instance.
     ///
     /// - Parameter string: A string in the format demonstrated in the example `0,9 -> 5,9`.
     public init(in string: String) throws {
-        guard let match = LineSegment.stringRegex
-                .firstMatch(in: string, range: NSRange(string.startIndex..., in: string)) else {
+        guard
+            let match = LineSegment.stringRegex
+                .firstMatch(in: string, range: NSRange(string.startIndex..., in: string))
+        else {
             throw ValidationError.stringDoesNotMatchSupportedFormat
         }
-        
+
         let start = Coordinate(
             x: Int(string[Range(match.range(at: 1), in: string)!])!,
             y: Int(string[Range(match.range(at: 2), in: string)!])!
@@ -132,10 +133,10 @@ public struct LineSegment {
             x: Int(string[Range(match.range(at: 3), in: string)!])!,
             y: Int(string[Range(match.range(at: 4), in: string)!])!
         )
-        
+
         try self.init(from: start, to: end)
     }
-    
+
     /// Represents the errors that can be thrown while validating a line segment.
     public enum ValidationError: Error {
         /// A line segment string must match the format demonstrated in the example `0,9 -> 5,9`.
@@ -178,16 +179,16 @@ public struct LineSegment {
 /// ```
 public struct Plot {
     public private(set) var grid: [[Int]]
-    
+
     /// Creates a new instance.
-    /// 
+    ///
     /// - Parameters:
     ///   - maxX: maximum supported x-coordinate
     ///   - maxY: maximum supported y-coordinate
     public init(maxX: Int, maxY: Int) {
         self.grid = Array(repeating: Array(repeating: 0, count: maxX + 1), count: maxY + 1)
     }
-    
+
     /// Plots the provided line segment.
     ///
     /// - Parameter line: The line segment to plot.

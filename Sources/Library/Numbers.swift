@@ -8,7 +8,7 @@ public struct BinaryUInt64 {
     public let binaryValue: String
     /// The number of bits used to represent the number.
     public let bitCount: Int
-    
+
     /// Creates an instance from an integer value.
     ///
     /// - Parameters:
@@ -16,15 +16,15 @@ public struct BinaryUInt64 {
     ///  - bitCount: The number of bits to use to express the number.
     public init?(from integerValue: UInt64, with bitCount: Int) {
         let binaryValue = String(integerValue, radix: 2)
-        guard binaryValue.count <= bitCount  else {
+        guard binaryValue.count <= bitCount else {
             return nil
         }
-        
+
         self.integerValue = integerValue
         self.binaryValue = String(repeating: "0", count: bitCount - binaryValue.count) + binaryValue
         self.bitCount = bitCount
     }
-    
+
     /// Creates an instance from an integer value.
     ///
     /// - Parameter binaryValue: A binary value.
@@ -32,7 +32,7 @@ public struct BinaryUInt64 {
         guard let integerValue = UInt64(binaryValue, radix: 2) else {
             return nil
         }
-        
+
         self.integerValue = integerValue
         self.binaryValue = binaryValue
         self.bitCount = binaryValue.count
