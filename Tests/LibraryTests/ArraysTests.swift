@@ -62,4 +62,26 @@ class ArraysTests: XCTestCase {
         // Assert
         XCTAssertEqual(output, [["0", "0", "0"], ["1", "1", "1"], ["2", "2", "2"]])
     }
+    
+    func testStrideToleratingZeroWithZeroStep() {
+        // Arrange
+        let seq = strideToleratingZero(from: 1, through: 1, by: 0)
+        
+        // Act
+        let values = Array(seq.prefix(3))
+        
+        // Assert
+        XCTAssertEqual(values, [1, 1, 1])
+    }
+    
+    func testStrideToleratingZeroWithNonZeroStep() {
+        // Arrange
+        let seq = strideToleratingZero(from: 1, through: 3, by: 1)
+        
+        // Act
+        let values = Array(seq.prefix(5))
+        
+        // Assert
+        XCTAssertEqual(values, [1, 2, 3])
+    }
 }

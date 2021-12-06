@@ -18,3 +18,28 @@ extension Array where Element: Collection, Element.Index == Int {
         return (0..<self[0].count).map{ self.column(at: $0) }
     }
 }
+
+public struct StrideThroughToleratingZero: Sequence, IteratorProtocol {
+    private var strideThroughIterator: StrideThroughIterator<Int>?
+    private var unfoldSequence: UnfoldFirstSequence<Int>?
+    
+    public init(from start: Int, through end: Int, by step: Int) {
+        if step == 0 {
+            self.unfoldSequence = sequence(first: start, next: { $0 }).makeIterator()
+        } else {
+            self.strideThroughIterator = stride(from: start, through: end, by: step).makeIterator()
+        }
+    }
+    
+    public mutating func next() -> Int? {
+        if self.strideThroughIterator != nil {
+            return self.strideThroughIterator!.next()
+        } else {
+            return self.unfoldSequence!.next()
+        }
+    }
+}
+
+public func strideToleratingZero(from start: Int, through end: Int, by step: Int) -> StrideThroughToleratingZero {
+    return StrideThroughToleratingZero(from: start, through: end, by: step)
+}

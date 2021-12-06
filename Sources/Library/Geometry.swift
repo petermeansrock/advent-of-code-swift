@@ -65,15 +65,10 @@ public struct Coordinate: Equatable {
         let dx = xDifference / max(abs(xDifference), 1)
         let dy = yDifference / max(abs(yDifference), 1)
         
-        var coordinates = [Coordinate]()
-        var current = lhs
-        while (current != rhs) {
-            coordinates.append(current)
-            current = Coordinate(x: current.x + dx, y: current.y + dy)
-        }
-        coordinates.append(rhs)
+        let xValues = strideToleratingZero(from: lhs.x, through: rhs.x, by: dx)
+        let yValues = strideToleratingZero(from: lhs.y, through: rhs.y, by: dy)
         
-        return coordinates
+        return zip(xValues, yValues).map(Coordinate.init)
     }
     
     /// Represents the errors that may be thrown when determining relative orientation.
