@@ -34,6 +34,7 @@ public struct Coordinate: Equatable {
     ///
     /// - Parameter other: Another coordinate to which to determine relative orientation.
     /// - Returns: The relative orientation between the two coordinates.
+    /// - Throws: If a supported ``Orientation`` cannot be determined between the points.
     public func relativeOrientation(to other: Coordinate) throws -> Orientation {
         if self == other {
             throw RelativeOrientationError.pointsAreIdentical
@@ -50,14 +51,25 @@ public struct Coordinate: Equatable {
 
     /// Determines whether two points are equal based on comparison of their x and y values.
     ///
+    /// - Parameters:
+    ///   - lhs: A coordinate to compare for equality.
+    ///   - rhs: Another coordinate to compare for equality.
     /// - Returns: Returns true if the coordinates are equal, false otherwise.
     public static func == (lhs: Coordinate, rhs: Coordinate) -> Bool {
         return lhs.x == rhs.x && lhs.y == rhs.y
     }
 
     /// Returns a list of coordinates between the two provided coordinates, inclusive.
+    ///
+    /// - Parameters:
+    ///   - lhs: The starting point of the range of coordinates to return.
+    ///   - rhs: The ending point of the range of coordinates to return.
     /// - Returns: A list of coordinates between the two provided coordinates, inclusive.
+    /// - Throws: If a supported ``Orientation`` cannot be determined between the points.
     public static func ... (lhs: Coordinate, rhs: Coordinate) throws -> [Coordinate] {
+        // Confirm that the coordinates are aligned perfectly
+        let _ = try lhs.relativeOrientation(to: rhs)
+
         let xDifference = rhs.x - lhs.x
         let yDifference = rhs.y - lhs.y
 
@@ -107,6 +119,7 @@ public struct LineSegment {
     /// - Parameters:
     ///   - start: The start coordinate.
     ///   - end: The end coordinate.
+    /// - Throws: If a supported ``Orientation`` cannot be determined between the start and end points.
     public init(from start: Coordinate, to end: Coordinate) throws {
         self.start = start
         self.end = end
@@ -117,6 +130,7 @@ public struct LineSegment {
     /// Creates a new instance.
     ///
     /// - Parameter string: A string in the format demonstrated in the example `0,9 -> 5,9`.
+    /// - Throws: If a supported ``Orientation`` cannot be determined between the start and end points.
     public init(in string: String) throws {
         guard
             let match = LineSegment.stringRegex
