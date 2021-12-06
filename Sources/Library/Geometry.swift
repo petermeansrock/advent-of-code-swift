@@ -130,7 +130,9 @@ public struct LineSegment {
     /// Creates a new instance.
     ///
     /// - Parameter string: A string in the format demonstrated in the example `0,9 -> 5,9`.
-    /// - Throws: If a supported ``Orientation`` cannot be determined between the start and end points.
+    /// - Throws:
+    ///   - If the string doesn't match the supported format demonstrated in the example `0,9 -> 5,9`.
+    ///   - If a supported ``Orientation`` cannot be determined between the start and end points.
     public init(in string: String) throws {
         guard
             let match = LineSegment.stringRegex
