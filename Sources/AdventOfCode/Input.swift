@@ -6,11 +6,13 @@ public struct InputFile {
 
     /// Creates an instance.
     ///
-    /// - Parameter day: The day number for the input file.
+    /// - Parameters:
+    ///   - bundle: The bundle from which to load the input file.
+    ///   - day: The day number for the input file.
     @available(macOS 10.12, *)
-    public init(day: Int) {
+    public init(bundle: Bundle, day: Int) {
         self.url = NSURL.fileURL(
-            withPath: Bundle.module.path(forResource: "\(day)", ofType: "txt")!)
+            withPath: bundle.path(forResource: "\(day)", ofType: "txt")!)
     }
 
     /// Loads the contents of the file into a string.

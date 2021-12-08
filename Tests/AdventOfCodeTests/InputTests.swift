@@ -5,7 +5,7 @@ import XCTest
 class InputTests: XCTestCase {
     func testInputFileLoadLines() throws {
         // Arrange
-        let inputFile = InputFile(day: 1)
+        let inputFile = InputFile(bundle: Bundle.module, day: 1)
 
         // Act
         let lines = inputFile.loadLines()
