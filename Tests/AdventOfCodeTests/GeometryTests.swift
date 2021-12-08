@@ -1,6 +1,6 @@
 import XCTest
 
-@testable import Library
+@testable import AdventOfCode
 
 class CoordinateTests: XCTestCase {
     func testRelativeOrientationBetweenHorizontalPoints() throws {

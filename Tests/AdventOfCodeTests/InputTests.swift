@@ -1,6 +1,6 @@
 import XCTest
 
-@testable import Library
+@testable import AdventOfCode
 
 class InputTests: XCTestCase {
     func testInputFileLoadLines() throws {

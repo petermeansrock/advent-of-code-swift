@@ -1,7 +1,7 @@
 import Foundation
 import XCTest
 
-@testable import Library
+@testable import AdventOfCode
 
 class NumbersTests: XCTestCase {
     func testInitFromBinary() throws {
