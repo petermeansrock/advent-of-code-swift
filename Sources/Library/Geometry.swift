@@ -194,6 +194,7 @@ public struct LineSegment {
 /// 222111....
 /// ```
 public struct Plot {
+    /// The current state of the grid.
     public private(set) var grid: [[Int]]
 
     /// Creates a new instance.
