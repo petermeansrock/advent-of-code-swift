@@ -19,11 +19,13 @@ extension Array where Element: Collection, Element.Index == Int {
     }
 }
 
+/// A sequence of values separated by a stride, which itself can be zero (producing an infinite
+/// sequence).
 public struct StrideThroughToleratingZero: Sequence, IteratorProtocol {
     private var strideThroughIterator: StrideThroughIterator<Int>?
     private var unfoldSequence: UnfoldFirstSequence<Int>?
 
-    public init(from start: Int, through end: Int, by step: Int) {
+    internal init(from start: Int, through end: Int, by step: Int) {
         if step == 0 {
             self.unfoldSequence = sequence(first: start, next: { $0 }).makeIterator()
         } else {
@@ -31,6 +33,9 @@ public struct StrideThroughToleratingZero: Sequence, IteratorProtocol {
         }
     }
 
+    /// Returns the next element for this iterator.
+    ///
+    /// - Returns: The next element for this iterator.
     public mutating func next() -> Int? {
         if self.strideThroughIterator != nil {
             return self.strideThroughIterator!.next()
@@ -40,6 +45,15 @@ public struct StrideThroughToleratingZero: Sequence, IteratorProtocol {
     }
 }
 
+/// Returns a sequence of values separated by a stride, which itself can be zero (producing an
+/// infinite sequence).
+///
+/// - Parameters:
+///   - start: The start of the sequence.
+///   - end: The end of the sequence (assuming it can be reached).
+///   - step: The stride between values in the sequence.
+/// - Returns:Asequence of values separated by a stride, which itself can be zero (producing an
+///   infinite sequence).
 public func strideToleratingZero(from start: Int, through end: Int, by step: Int)
     -> StrideThroughToleratingZero
 {
