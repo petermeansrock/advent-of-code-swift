@@ -17,6 +17,56 @@ extension Array where Element: Collection, Element.Index == Int {
     public func columns() -> [[Element.Iterator.Element]] {
         return (0..<self[0].count).map { self.column(at: $0) }
     }
+
+    /// Returns the neighbors of the provided cell.
+    ///
+    /// - Parameters:
+    ///   - row: The row of the cell for which to find neighbors.
+    ///   - column: The column of the cell for which to find neighbors.
+    ///   - adjacencies: The set of adjacencies to consider.
+    /// - Returns: The neighbors of the provided cell as a tuple containing row, column, and value.
+    public func neighbors(row: Int, column: Int, adjacencies: Set<Adjacency>) -> [(
+        row: Int, column: Int, value: Element.Element
+    )] {
+        return
+            adjacencies
+            .flatMap { $0.relativeCoordinates }
+            .map { (row + $0.Δrow, column + $0.Δcolumn) }
+            .filter { self.indices.contains($0.0) && self[$0.0].indices.contains($0.1) }
+            .map { (row: $0.0, column: $0.1, value: self[$0.0][$0.1]) }
+    }
+}
+
+/// An enumeration of valid adjacencies between cells in a row-major, two-dimensional array.
+public enum Adjacency: CaseIterable {
+    /// Two cells are horizontally adjacent if they share the same row but have a column index difference of 1.
+    case horizontal
+    /// Two cells are vertically adjacent if they share the same column but have a row index difference of 1.
+    case vertical
+    /// Two cells are diagonally adjacent if both their row and column index differences are 1.
+    case diagonal
+
+    fileprivate var relativeCoordinates: [(Δrow: Int, Δcolumn: Int)] {
+        switch self {
+        case .horizontal:
+            return [
+                (0, -1),
+                (0, +1),
+            ]
+        case .vertical:
+            return [
+                (-1, 0),
+                (+1, 0),
+            ]
+        case .diagonal:
+            return [
+                (-1, -1),
+                (-1, +1),
+                (+1, -1),
+                (+1, +1),
+            ]
+        }
+    }
 }
 
 /// A sequence of values separated by a stride, which itself can be zero (producing an infinite
