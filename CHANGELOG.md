@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/petermeansrock/advent-of-code-swift/compare/v1.1.0...v1.1.1) (2021-12-12)
+
+
+### Bug Fixes
+
+* make points' memberwise initializers public ([12ba486](https://github.com/petermeansrock/advent-of-code-swift/commit/12ba486308f6476a81b10768ee3f21ed37da2303))
+
 ## [1.1.0](https://github.com/petermeansrock/advent-of-code-swift/compare/v1.0.1...v1.1.0) (2021-12-12)
 
 
