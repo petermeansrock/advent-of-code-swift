@@ -7,6 +7,16 @@ public struct TwoDimensionalPoint<T: Numeric>: Hashable where T: Hashable {
     /// The y-axis value for this point.
     public let y: T
 
+    /// Creates a new instance.
+    ///
+    /// - Parameters:
+    ///   - x: The x-axis value for this point.
+    ///   - y: The y-axis value for this point
+    public init(x: T, y: T) {
+        self.x = x
+        self.y = y
+    }
+
     /// Hashes the essential components of this value by feeding them into the given hasher.
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.x)
@@ -22,6 +32,18 @@ public struct ThreeDimensionalPoint<T: Numeric>: Hashable where T: Hashable {
     public let y: T
     /// The z-axis value for this point.
     public let z: T
+
+    /// Creates a new instance.
+    ///
+    /// - Parameters:
+    ///   - x: The x-axis value for this point.
+    ///   - y: The y-axis value for this point.
+    ///   - z: The z-axis value for this point.
+    public init(x: T, y: T, z: T) {
+        self.x = x
+        self.y = y
+        self.z = z
+    }
 
     /// Hashes the essential components of this value by feeding them into the given hasher.
     public func hash(into hasher: inout Hasher) {
