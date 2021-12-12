@@ -1,5 +1,36 @@
 import Foundation
 
+/// Represents a point in two-dimensional space.
+public struct TwoDimensionalPoint<T: Numeric>: Hashable where T: Hashable {
+    /// The x-axis value for this point.
+    public let x: T
+    /// The y-axis value for this point.
+    public let y: T
+
+    /// Hashes the essential components of this value by feeding them into the given hasher.
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.x)
+        hasher.combine(self.y)
+    }
+}
+
+/// Represents a point in three-dimensional space.
+public struct ThreeDimensionalPoint<T: Numeric>: Hashable where T: Hashable {
+    /// The x-axis value for this point.
+    public let x: T
+    /// The y-axis value for this point.
+    public let y: T
+    /// The z-axis value for this point.
+    public let z: T
+
+    /// Hashes the essential components of this value by feeding them into the given hasher.
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.x)
+        hasher.combine(self.y)
+        hasher.combine(self.z)
+    }
+}
+
 /// Represents the relative orientation between two entities.
 public enum Orientation {
     case horizontal

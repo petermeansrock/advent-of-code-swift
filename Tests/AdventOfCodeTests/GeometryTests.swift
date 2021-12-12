@@ -2,6 +2,62 @@ import XCTest
 
 @testable import AdventOfCode
 
+class TwoDimensionalPointTests: XCTestCase {
+    func testIntHashWithSet() {
+        // Arrange
+        let point = TwoDimensionalPoint(x: 5, y: 10)
+        var set = Set<TwoDimensionalPoint<Int>>()
+        set.insert(point)
+
+        // Act
+        let contains = set.contains(TwoDimensionalPoint(x: 5, y: 10))
+
+        // Assert
+        XCTAssertTrue(contains)
+    }
+
+    func testDoubleHashWithSet() {
+        // Arrange
+        let point = TwoDimensionalPoint(x: 5.0, y: 10.0)
+        var set = Set<TwoDimensionalPoint<Double>>()
+        set.insert(point)
+
+        // Act
+        let contains = set.contains(TwoDimensionalPoint(x: 5.0, y: 10.0))
+
+        // Assert
+        XCTAssertTrue(contains)
+    }
+}
+
+class ThreeDimensionalPointTests: XCTestCase {
+    func testIntHashWithSet() {
+        // Arrange
+        let point = ThreeDimensionalPoint(x: 5, y: 10, z: 15)
+        var set = Set<ThreeDimensionalPoint<Int>>()
+        set.insert(point)
+
+        // Act
+        let contains = set.contains(ThreeDimensionalPoint(x: 5, y: 10, z: 15))
+
+        // Assert
+        XCTAssertTrue(contains)
+    }
+
+    func testDoubleHashWithSet() {
+        // Arrange
+        let point = ThreeDimensionalPoint(x: 5.0, y: 10.0, z: 15.0)
+        var set = Set<ThreeDimensionalPoint<Double>>()
+        set.insert(point)
+
+        // Act
+        let contains = set.contains(ThreeDimensionalPoint(x: 5.0, y: 10.0, z: 15.0))
+
+        // Assert
+        XCTAssertTrue(contains)
+    }
+}
+
 class CoordinateTests: XCTestCase {
     func testRelativeOrientationBetweenHorizontalPoints() throws {
         // Arrange
