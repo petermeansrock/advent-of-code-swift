@@ -27,4 +27,41 @@ public struct InputFile {
     public func loadLines() -> [String] {
         return self.loadContents().components(separatedBy: .newlines).compactMap { $0 }
     }
+
+    /// Loads the contents of the file into chunks of lines.
+    ///
+    /// Each chunk is delimited by an empty line. Consider the following input file:
+    ///
+    /// ```
+    /// one
+    /// chunk
+    ///
+    /// another
+    /// chunk
+    ///
+    ///
+    /// ```
+    ///
+    /// The above input would produce two chunks, each comprised of two lines:
+    /// - Chunk 1 would contain `["one", "chunk"]`
+    /// - Chunk 2 would contain `["another", "chunk"]`
+    ///
+    /// - Returns: The chunks of lines from the input file.
+    public func loadLineChunks() -> [[String]] {
+        let lines = loadLines()
+        var chunks = [[String]]()
+        var chunk = [String]()
+        for line in lines {
+            if line.count == 0 {
+                // On blank lines, record previous chunk and create a new one
+                chunks.append(chunk)
+                chunk = []
+            } else {
+                // Otherwise, record line as part of current chunk
+                chunk.append(line)
+            }
+        }
+
+        return chunks
+    }
 }
