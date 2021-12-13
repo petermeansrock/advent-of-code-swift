@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/petermeansrock/advent-of-code-swift/compare/v1.1.1...v1.2.0) (2021-12-13)
+
+
+### Features
+
+* add input file API to load line chunks ([41ff0f2](https://github.com/petermeansrock/advent-of-code-swift/commit/41ff0f23449ce43b7a812520d007f4155d6a47ab))
+
 ### [1.1.1](https://github.com/petermeansrock/advent-of-code-swift/compare/v1.1.0...v1.1.1) (2021-12-12)
 
 
