@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/petermeansrock/advent-of-code-swift/compare/v1.2.0...v1.3.0) (2021-12-20)
+
+
+### Features
+
+* add String APIs to simplify regexes ([805abb0](https://github.com/petermeansrock/advent-of-code-swift/commit/805abb0cd4efb7c121dc593dceb4a8804b0ea644))
+
 ## [1.2.0](https://github.com/petermeansrock/advent-of-code-swift/compare/v1.1.1...v1.2.0) (2021-12-13)
 
 
