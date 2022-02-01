@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/petermeansrock/advent-of-code-swift/compare/v1.4.0...v1.4.1) (2022-02-01)
+
+
+### Bug Fixes
+
+* avoid producing empty chunks ([26ebafd](https://github.com/petermeansrock/advent-of-code-swift/commit/26ebafdc7661f1cc4c0ebaa035d4594146326cf1))
+
 ## [1.4.0](https://github.com/petermeansrock/advent-of-code-swift/compare/v1.3.0...v1.4.0) (2022-02-01)
 
 
