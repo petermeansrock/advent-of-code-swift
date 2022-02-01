@@ -37,6 +37,21 @@ extension Array where Element: Collection, Element.Index == Int {
     }
 }
 
+extension Array {
+    /// Returns a chunked view of the array.
+    ///
+    /// For example, given an input array `[1, 2, 3, 4, 5]` and a chunks size of `2`, this function
+    /// will return the two-dimensional array `[[1, 2], [3, 4], [5]]`.
+    ///
+    /// - Parameter size: The size of each chunk.
+    /// - Returns: A chunked view of the array.
+    public func chunked(into size: Int) -> [[Element]] {
+        return stride(from: 0, through: self.count, by: size).map { chunkedIndex in
+            Array(self[chunkedIndex..<Swift.min(chunkedIndex + size, self.count)])
+        }
+    }
+}
+
 /// An enumeration of valid adjacencies between cells in a row-major, two-dimensional array.
 public enum Adjacency: CaseIterable {
     /// Two cells are horizontally adjacent if they share the same row but have a column index difference of 1.

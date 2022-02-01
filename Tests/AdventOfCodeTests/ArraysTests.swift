@@ -3,7 +3,7 @@ import XCTest
 
 @testable import AdventOfCode
 
-class ArraysTests: XCTestCase {
+class MultiDimensionalArraysTests: XCTestCase {
     func testColumnWithTwoDimensionalArrayOfIntegers() throws {
         // Arrange
         let input = [
@@ -177,5 +177,18 @@ class ArraysTests: XCTestCase {
 
         // Assert
         XCTAssertEqual(values, [1, 2, 3])
+    }
+}
+
+class ArraysTests: XCTestCase {
+    func testChunked() throws {
+        // Arrange
+        let input = [1, 2, 3, 4, 5]
+
+        // Act
+        let output = input.chunked(into: 2)
+
+        // Assert
+        XCTAssertEqual(output, [[1, 2], [3, 4], [5]])
     }
 }
