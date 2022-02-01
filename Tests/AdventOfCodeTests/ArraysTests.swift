@@ -181,7 +181,18 @@ class MultiDimensionalArraysTests: XCTestCase {
 }
 
 class ArraysTests: XCTestCase {
-    func testChunked() throws {
+    func testChunkedWithoutLeftovers() throws {
+        // Arrange
+        let input = [1, 2, 3, 4]
+
+        // Act
+        let output = input.chunked(into: 2)
+
+        // Assert
+        XCTAssertEqual(output, [[1, 2], [3, 4]])
+    }
+
+    func testChunkedWithLeftovers() throws {
         // Arrange
         let input = [1, 2, 3, 4, 5]
 

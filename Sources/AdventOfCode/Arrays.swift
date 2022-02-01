@@ -46,7 +46,7 @@ extension Array {
     /// - Parameter size: The size of each chunk.
     /// - Returns: A chunked view of the array.
     public func chunked(into size: Int) -> [[Element]] {
-        return stride(from: 0, through: self.count, by: size).map { chunkedIndex in
+        return stride(from: 0, to: self.count, by: size).map { chunkedIndex in
             Array(self[chunkedIndex..<Swift.min(chunkedIndex + size, self.count)])
         }
     }
